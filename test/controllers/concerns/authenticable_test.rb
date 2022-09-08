@@ -1,3 +1,14 @@
+class MockController
+  include Authenticable
+  attr_accessor :request
+
+  def initialize
+    mock_request = Struct.new(:headers)
+    self.request = mock_request.new(header: {})
+  end
+end
+
+
 class AuthenticableTest < ActionDispatch::IntegrationTest
 
   setup do
@@ -11,18 +22,9 @@ class AuthenticableTest < ActionDispatch::IntegrationTest
     assert_equal @user.id, @authentication.current_user.id
   end
 
-  test 'should not get user from Authorization token' do
+  test 'should not get user empty from Authorization token' do
     @authentication.request.headers['Authorization'] = nil
     assert_nil @authentication.current_user
   end
 end
 
-class MockController
-  include Authenticable
-  attr_accessor :request
-
-  def initialize
-    mock_request = Struct.new(:headers)
-    self.request = mock_request.new({})
-  end
-end
