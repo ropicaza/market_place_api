@@ -9,7 +9,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     get api_v1_user_url(@user), as: :json
     assert_response :success
     # Test to  ensure response contains the correct email
-    json_repsonse = JSON.parse(self.response.body, simbolized_names: true)
+    json_repsonse = JSON.parse(self.response.body, symbolize_names: true)
     assert_equal @user.email, json_repsonse.dig(:data, :attributes, :email)
     assert_equal @user.products.first.id.to_s, json_repsonse.dig(:data, :relationships, :products, :data, 0, :id)
     assert_equal @user.products.first.title, json_repsonse.dig(:included, 0, :attributes, :title)
