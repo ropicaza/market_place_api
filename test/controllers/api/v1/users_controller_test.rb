@@ -10,7 +10,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     # Test to  ensure response contains the correct email
     json_repsonse = JSON.parse(self.response.body)
-    assert_equal @user.email, json_repsonse['email']
+    assert_equal @user.email, json_repsonse['data']['attributes']['email']
   end
 
   test "should create user" do
